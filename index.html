@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alisha Ather — Computer Engineering &amp; AI/ML</title>
+<meta name="description" content="Portfolio of Alisha Ather, Computer Engineering student building AI/ML systems and full-stack applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F6F5F1;
+    --panel: #EFEDE6;
+    --ink: #16181C;
+    --muted: #5B5F66;
+    --line: #DAD8CE;
+    --accent: #2E5EAA;
+    --accent-ink: #1B3E77;
+    --amber: #C97A2B;
+    --good: #3F7D5C;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  a{color:var(--accent-ink);}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  /* Layout: fixed left rail + scrolling main column */
+  .shell{
+    display:grid;
+    grid-template-columns: 260px 1fr;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .rail{
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:48px 28px 32px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border-right:1px solid var(--line);
+  }
+  .rail-top .name{
+    font-size:1.5rem;
+    line-height:1.2;
+  }
+  .rail-top .role{
+    margin-top:6px;
+    font-size:0.85rem;
+    color:var(--muted);
+  }
+  .toc{
+    margin-top:44px;
+    list-style:none;
+    padding:0;
+  }
+  .toc li{margin-bottom:2px;}
+  .toc a{
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:0.92rem;
+    padding:7px 0;
+    border-left:2px solid transparent;
+    padding-left:12px;
+    margin-left:-14px;
+    transition:color .15s, border-color .15s;
+  }
+  .toc a .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--line);
+  }
+  .toc a:hover, .toc a.active{
+    color:var(--ink);
+    border-left-color:var(--accent);
+  }
+  .toc a.active .idx{color:var(--accent);}
+  .rail-bottom{font-size:0.8rem;color:var(--muted);}
+  .rail-bottom a{color:var(--muted);}
+
+  main{padding:64px 56px 120px;}
+  section{
+    padding-top:16px;
+    margin-bottom:96px;
+    scroll-margin-top:40px;
+  }
+  section:last-of-type{margin-bottom:40px;}
+  .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+
+  /* Hero */
+  .hero h1{
+    font-size:clamp(2.1rem, 4vw, 3rem);
+    max-width:14ch;
+  }
+  .hero p.lede{
+    margin-top:18px;
+    max-width:52ch;
+    font-size:1.08rem;
+    color:var(--muted);
+  }
+  .hero .stats{
+    margin-top:36px;
+    display:flex;
+    gap:36px;
+    flex-wrap:wrap;
+  }
+  .stat .n{font-family:'IBM Plex Mono', monospace; font-size:1.3rem;}
+  .stat .l{font-size:0.78rem; color:var(--muted); margin-top:2px;}
+
+  p.body-text{color:var(--muted); max-width:62ch;}
+
+  /* Featured project */
+  .featured{
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:36px;
+    border-radius:2px;
+  }
+  .featured .tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    color:var(--good);
+    border:1px solid var(--good);
+    padding:3px 8px;
+    border-radius:2px;
+    margin-bottom:16px;
+  }
+  .featured h3{font-size:1.5rem; max-width:24ch;}
+  .featured .desc{margin-top:14px; color:var(--muted); max-width:62ch;}
+  .readout{
+    margin-top:28px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .readout div{
+    background:var(--bg);
+    padding:14px 16px;
+  }
+  .readout .v{font-family:'IBM Plex Mono', monospace; font-size:1.05rem;}
+  .readout .k{font-size:0.72rem; color:var(--muted); margin-top:4px;}
+  .stackline{
+    margin-top:24px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--muted);
+  }
+  .links{margin-top:22px; display:flex; gap:20px; flex-wrap:wrap;}
+  .links a{
+    font-size:0.88rem;
+    text-decoration:none;
+    border-bottom:1px solid var(--accent-ink);
+    padding-bottom:1px;
+  }
+  .links a.todo{
+    color:var(--amber);
+    border-bottom-color:var(--amber);
+  }
+
+  /* Project category groups */
+  .cat-group{margin-bottom:44px;}
+  .cat-group:last-child{margin-bottom:0;}
+  .cat-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent-ink);
+    margin-bottom:16px;
+  }
+  .proj{
+    padding:20px 0;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap:28px;
+  }
+  .cat-group .proj:last-child{border-bottom:1px solid var(--line);}
+  .proj h4{font-size:1.08rem; font-weight:600; font-family:'IBM Plex Sans',sans-serif;}
+  .proj .meta{font-size:0.76rem; color:var(--muted); margin-top:4px;}
+  .proj .desc{font-size:0.93rem; color:var(--muted);}
+  .proj .plinks{margin-top:10px; display:flex; gap:16px;}
+  .proj .plinks a{font-size:0.82rem; text-decoration:none; border-bottom:1px solid var(--accent-ink);}
+  .proj .plinks a.todo{color:var(--amber); border-bottom-color:var(--amber);}
+
+  .inprogress{
+    margin-top:36px;
+    padding:16px 20px;
+    border:1px dashed var(--line);
+    font-size:0.88rem;
+    color:var(--muted);
+  }
+  .inprogress .k{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--amber);}
+
+  /* Skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px 40px;
+  }
+  .skill-group .h{font-size:0.85rem; font-weight:600; margin-bottom:8px;}
+  .skill-group .items{font-size:0.9rem; color:var(--muted); line-height:1.9;}
+
+  /* Resume + contact */
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap; margin-top:20px;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 18px;
+    font-size:0.9rem;
+    text-decoration:none;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    border-radius:2px;
+  }
+  .btn.primary{background:var(--ink); color:var(--bg);}
+  .contact-list{margin-top:24px; font-size:0.95rem;}
+  .contact-list div{padding:8px 0; border-top:1px solid var(--line);}
+  .contact-list .k{color:var(--muted); font-family:'IBM Plex Mono', monospace; font-size:0.75rem; display:inline-block; width:110px;}
+  .todo-text{color:var(--amber);}
+
+  footer{
+    padding:28px 56px 56px;
+    font-size:0.78rem;
+    color:var(--muted);
+    grid-column:2;
+  }
+
+  /* Mobile */
+  .rail-toggle{display:none;}
+  @media (max-width:860px){
+    .shell{display:block;}
+    .rail{
+      position:sticky;
+      height:auto;
+      top:0;
+      z-index:20;
+      background:var(--bg);
+      padding:20px 24px;
+      flex-direction:row;
+      align-items:center;
+      justify-content:space-between;
+      border-right:none;
+      border-bottom:1px solid var(--line);
+    }
+    .rail-top .role{display:none;}
+    .toc{
+      position:fixed;
+      top:64px; left:0; right:0;
+      background:var(--bg);
+      margin:0;
+      padding:12px 24px 20px;
+      border-bottom:1px solid var(--line);
+      display:none;
+    }
+    .toc.open{display:block;}
+    .rail-bottom{display:none;}
+    .rail-toggle{
+      display:block;
+      font-family:'IBM Plex Mono', monospace;
+      font-size:0.78rem;
+      background:none;
+      border:1px solid var(--line);
+      padding:7px 12px;
+      border-radius:2px;
+      color:var(--ink);
+    }
+    main{padding:40px 24px 80px;}
+    .proj{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:1fr;}
+    footer{padding:24px; grid-column:1;}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <nav class="rail">
+    <div class="rail-top">
+      <div class="name">Alisha Ather</div>
+      <div class="role">Computer Engineering — AI/ML</div>
+    </div>
+    <button class="rail-toggle" id="railToggle" aria-expanded="false">Menu</button>
+    <ul class="toc" id="toc">
+      <li><a href="#about"><span class="idx">01</span> About</a></li>
+      <li><a href="#featured"><span class="idx">02</span> Featured build</a></li>
+      <li><a href="#projects"><span class="idx">03</span> Projects</a></li>
+      <li><a href="#skills"><span class="idx">04</span> Skills</a></li>
+      <li><a href="#contact"><span class="idx">05</span> Resume &amp; contact</a></li>
+    </ul>
+    <div class="rail-bottom">
+      Karachi, Pakistan<br>
+      NED University of Engineering &amp; Technology
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO / ABOUT -->
+    <section id="about" class="hero">
+      <div class="kicker">Portfolio — updated 2026</div>
+      <h1>Building AI/ML systems and full‑stack applications, one shipped project at a time.</h1>
+      <p class="lede">I'm a Computer Engineering student at NED University, Karachi. I switched into this program specifically to work toward AI and machine learning, and most of what's below is what that's looked like in practice — a deployed forecasting pipeline, a few ML classifiers, and some full‑stack apps I built to actually learn the stack, not just follow along with it.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">3.83</div><div class="l">CGPA</div></div>
+        <div class="stat"><div class="n">7</div><div class="l">Projects shipped</div></div>
+        <div class="stat"><div class="n">2027</div><div class="l">Graduating</div></div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECT -->
+    <section id="featured">
+      <div class="kicker">02 — Featured build</div>
+      <div class="featured">
+        <span class="tag">deployed</span>
+        <h3>AQI Predictor — 3‑day air quality forecasting for Karachi</h3>
+        <p class="desc">An end-to-end ML pipeline that forecasts Karachi's air quality index three days out. Built as a full production-style system rather than a notebook: a feature pipeline and training pipeline, a feature store and model registry on Hopsworks, automated retraining and data refresh via GitHub Actions, and a live dashboard with per-prediction SHAP explainability.</p>
+        <div class="readout">
+          <div><div class="v">R² 0.24</div><div class="k">day‑1 forecast (gradient boosting)</div></div>
+          <div><div class="v">hourly</div><div class="k">automated feature updates</div></div>
+          <div><div class="v">SHAP</div><div class="k">live per‑prediction explainability</div></div>
+          <div><div class="v">CI/CD</div><div class="k">GitHub Actions, scheduled + on‑demand</div></div>
+        </div>
+        <div class="stackline">python · scikit-learn · hopsworks · streamlit · github actions</div>
+        <div class="links">
+          <a href="#" class="todo">Live dashboard — add your Streamlit link ↗</a>
+          <a href="#" class="todo">GitHub repo — add link ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="kicker">03 — Projects</div>
+      <h2 style="font-size:1.6rem; margin-bottom:36px;">Selected work, by area</h2>
+
+      <div class="cat-group">
+        <div class="cat-title">AI / ML</div>
+
+        <div class="proj">
+          <div>
+            <h4>Electricity Bill Shock Predictor</h4>
+            <div class="meta">Feb – May 2026 · Python, scikit-learn</div>
+          </div>
+          <div>
+            <p class="desc">Classifies household electricity bills as Normal, High, or Shock and forecasts next month's usage, with an interactive widget for real-time predictions and personalized energy-saving tips.</p>
+            <div class="plinks"><a href="#" class="todo">Repo ↗</a></div>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div>
+            <h4>Queendom — Play Like a Queen</h4>
+            <div class="meta">Oct – Nov 2025 · Python</div>
+          </div>
+          <div>
+            <p class="desc">Search and optimization AI built around Uniform Cost Search, CSP backtracking, and hill climbing, with a visual GUI, real-time attack analysis, attack heatmaps, and performance benchmarking across algorithms.</p>
+            <div class="plinks"><a href="#" class="todo">Repo ↗</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-group">
+        <div class="cat-title">Web development</div>
+
+        <div class="proj">
+          <div>
+            <h4>Inventra — Warehouse Management System</h4>
+            <div class="meta">Nov – Dec 2025 · Flask, PostgreSQL, SQLAlchemy</div>
+          </div>
+          <div>
+            <p class="desc">A full-stack warehouse management app — the first project where I worked across the entire stack solo. Real-time inventory visibility, stock control, and access control (auth-gated routes, permission checks on user actions).</p>
+            <div class="plinks"><a href="#" class="todo">Repo ↗</a></div>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div>
+            <h4>Volven</h4>
+            <div class="meta">University internship · React, Tailwind, NASA APIs</div>
+          </div>
+          <div>
+            <p class="desc">An interactive visualization of Venus's volcanic surface: live NASA data integration, a custom Tailwind design system, an automatic day/night theme, and a Cytherean-clock component built on real Venus orbital constants.</p>
+            <div class="plinks"><a href="https://github.com/alishaather/Volven">Repo ↗</a></div>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div>
+            <h4>Crime and Criminal Database</h4>
+            <div class="meta">May – Jun 2025 · Flask, SQL Server</div>
+          </div>
+          <div>
+            <p class="desc">A group-built database web app for secure record management and investigative data retrieval, with advanced record tracking for law-enforcement-style workflows.</p>
+            <div class="plinks"><a href="#" class="todo">Repo ↗</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-group">
+        <div class="cat-title">Security / systems</div>
+
+        <div class="proj">
+          <div>
+            <h4>Morsify — LAN Secured Messenger</h4>
+            <div class="meta">Oct – Nov 2025 · Python sockets, CustomTkinter</div>
+          </div>
+          <div>
+            <p class="desc">Real-time, end-to-end encrypted LAN messenger with Morse-based text encoding, packetized data transmission, secure key rotation, and a WhatsApp-style UI.</p>
+            <div class="plinks"><a href="#" class="todo">Repo ↗</a></div>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div>
+            <h4>Weather Monitoring System</h4>
+            <div class="meta">Nov – Dec 2024 · C</div>
+          </div>
+          <div>
+            <p class="desc">Retrieves live weather data from a public API and parses JSON responses in C to display current weather metrics.</p>
+            <div class="plinks"><a href="#" class="todo">Repo ↗</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inprogress">
+        <span class="k">in progress</span> — an e-commerce store for wrist watches, built with React, Flask, and PostgreSQL/SQLAlchemy. Domain's already purchased; site's in development.
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="kicker">04 — Skills</div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="h">Languages</div>
+          <div class="items">Python · C · SQL · HTML / CSS</div>
+        </div>
+        <div class="skill-group">
+          <div class="h">ML &amp; data</div>
+          <div class="items">scikit-learn · pandas · SHAP · Hopsworks</div>
+        </div>
+        <div class="skill-group">
+          <div class="h">Web</div>
+          <div class="items">Flask · SQLAlchemy · PostgreSQL · React</div>
+        </div>
+        <div class="skill-group">
+          <div class="h">Tools &amp; platforms</div>
+          <div class="items">Git / GitHub · GitHub Actions · Streamlit</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME + CONTACT -->
+    <section id="contact">
+      <div class="kicker">05 — Resume &amp; contact</div>
+      <h2 style="font-size:1.6rem;">Get in touch</h2>
+      <p class="body-text" style="margin-top:12px;">Open to internships and entry-level roles in AI/ML and software engineering.</p>
+      <div class="cta-row">
+        <a href="resume.pdf" class="btn primary" download>Download résumé</a>
+        <a href="#" class="btn todo-text" style="border-color:var(--amber); color:var(--amber);">Add GitHub ↗</a>
+        <a href="#" class="btn todo-text" style="border-color:var(--amber); color:var(--amber);">Add LinkedIn ↗</a>
+      </div>
+      <div class="contact-list">
+        <div><span class="k">EMAIL</span> <span class="todo-text">add your email here</span></div>
+        <div><span class="k">LOCATION</span> Karachi, Pakistan</div>
+      </div>
+    </section>
+  </main>
+  <footer>Alisha Ather — built and maintained on GitHub Pages.</footer>
+</div>
+
+<script>
+  // mobile menu toggle
+  const toggle = document.getElementById('railToggle');
+  const toc = document.getElementById('toc');
+  if(toggle){
+    toggle.addEventListener('click', () => {
+      const open = toc.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  }
+
+  // active section highlight
+  const links = document.querySelectorAll('.toc a');
+  const sections = document.querySelectorAll('main section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+        if(active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
